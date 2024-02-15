@@ -2368,13 +2368,17 @@ components:
           properties:
             mms:
               type: boolean
+              enum: [true]
             sms:
               type: boolean
+              enum: [true]
             voice:
               type: boolean
+              enum: [true]
             fax:
               type: boolean
-          nullable: true
+              enum: [true]
+          nullable: false
           description: 'The set of Boolean properties that indicate whether a phone
             number can receive calls or messages.  Capabilities are  `Voice`, `SMS`,
             and `MMS` and each capability can be: `true` or `false`.'
@@ -2409,7 +2413,9 @@ components:
         phone_number:
           type: string
           format: phone-number
-          nullable: true
+          x-faker:
+            phone.phoneNumber: '+1444444000#'
+          nullable: false
           description: The phone number in [E.164](https://www.twilio.com/docs/glossary/what-e164)
             format, which consists of a + followed by the country code and subscriber
             number.
@@ -16227,6 +16233,7 @@ paths:
                 properties:
                   incoming_phone_numbers:
                     type: array
+                    minItems: 10
                     items:
                       $ref: '#/components/schemas/api.v2010.account.incoming_phone_number'
                   end:
@@ -16235,6 +16242,8 @@ paths:
                       localName = "end")'
                     x-getter-extra-annotation: '@JacksonXmlProperty(isAttribute =
                       true, localName = "end")'
+                    minimum: 0 
+                    maximum: 0 
                   first_page_uri:
                     type: string
                     format: uri
@@ -16245,6 +16254,7 @@ paths:
                   next_page_uri:
                     type: string
                     format: uri
+                    enum: [null]
                     nullable: true
                     x-field-extra-annotation: '@JacksonXmlProperty(isAttribute = true,
                       localName = "nextpageuri") @JsonSerialize(nullsUsing = XmlNullToEmptyStringSerializer.class)'
